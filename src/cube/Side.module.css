@@ -1,0 +1,43 @@
+
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    outline: 1px #ddd solid;
+}
+
+.row {
+    display: flex;
+}
+
+/*
+LAPTEUH = 1,
+YELLOW,
+BLUE,
+RED,
+GREEN,
+ORANGE
+ */
+.cell-1 {
+    background: #ffffff
+}
+
+.cell-2 {
+    background: #ffee80
+}
+
+.cell-3 {
+    background: #0751ef
+}
+
+.cell-4 {
+    background: #ff0000
+}
+
+.cell-5 {
+    background: #009d19
+}
+
+.cell-6 {
+    background: #ff9700
+}
+
