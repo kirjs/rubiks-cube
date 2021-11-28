@@ -41,6 +41,7 @@ function App() {
 
 
     const sideRotateMatrix = [rotate270, rotate180, rotate90, rotate0,] as const;
+    const LRRotateMatrix = [rotate0, rotate0, rotate0, rotate180] as const;
     const operations: Record<string, UpdateAction> = {
         U: {
             operation: [
@@ -86,6 +87,7 @@ function App() {
                 [-1, 0, 0],
             ],
             cycle: cycles.Y,
+            rotateMatrix: LRRotateMatrix,
 
         },
         LS: {
@@ -95,7 +97,7 @@ function App() {
                 [1, 0, 0],
             ],
             cycle: cycles.Y,
-
+            rotateMatrix: LRRotateMatrix,
         },
         RS: {
             operation: [
@@ -104,6 +106,7 @@ function App() {
                 [0, 0, -1],
             ],
             cycle: cycles.Y,
+            rotateMatrix: LRRotateMatrix,
 
         },
         R: {
@@ -113,6 +116,7 @@ function App() {
                 [0, 0, 1],
             ],
             cycle: cycles.Y,
+            rotateMatrix: LRRotateMatrix,
 
         },
 
@@ -123,7 +127,7 @@ function App() {
                 [0, 0, 0],
             ],
             cycle: cycles.Z, // 2 1 4 0
-            // rotateMatrix: sideRotateMatrix
+            rotateMatrix: sideRotateMatrix
         },
         FS: {
             operation: [
@@ -132,7 +136,7 @@ function App() {
                 [0, 0, 0],
             ],
             cycle: cycles.Z,
-            // rotateMatrix: sideRotateMatrix
+            rotateMatrix: sideRotateMatrix
         },
         BS: {
             operation: [
@@ -141,7 +145,7 @@ function App() {
                 [-1, -1, -1],
             ],
             cycle: cycles.Z,
-            // rotateMatrix: sideRotateMatrix
+            rotateMatrix: sideRotateMatrix
 
         },
         B: {
@@ -151,7 +155,7 @@ function App() {
                 [1, 1, 1],
             ],
             cycle: cycles.Z,
-            // rotateMatrix: sideRotateMatrix
+            rotateMatrix: sideRotateMatrix
 
         },
 
