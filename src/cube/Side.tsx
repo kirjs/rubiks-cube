@@ -13,8 +13,8 @@ const Side = ({side}: CubeProps) => {
             {side.map((row, k) => <div className={styles.row} key={k}>
                 {row.map((cell, key) => <div
                     key={key}
-                    className={`${styles['cell-' + cell]} ${styles.cell} `}
-                />)}
+                    className={`${styles['cell-' + cell.color]} ${styles.cell} `}
+                >{cell.id}</div>)}
             </div>)}
         </div>
     );

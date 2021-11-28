@@ -1,8 +1,11 @@
 
 .cell {
     width: var(--cell-size);
+    line-height: var(--cell-size);
     height: var(--cell-size);
     outline: 1px #ddd solid;
+    font-size: 10px;
+    text-align: center;
 }
 
 .row {

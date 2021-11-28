@@ -7,10 +7,16 @@ export enum Color {
     ORANGE
 }
 
-export type CubeSide = [
-    [Color, Color, Color],
-    [Color, Color, Color],
-    [Color, Color, Color],
+export interface Cell {
+    color: Color,
+    id: string;
+}
+
+export type CubeRow = readonly [Cell, Cell, Cell];
+export  type CubeSide = readonly [
+    CubeRow,
+    CubeRow,
+    CubeRow,
 ]
 
 export type CubeData = [
