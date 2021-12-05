@@ -1,29 +1,26 @@
 import React from 'react';
 import './cube3d.css';
 
-interface Cell {
+interface Rotatable {
+    rotateX: number;
+    rotateY: number;
+    rotateZ: number;
+
+}
+
+export interface Cell3D extends Rotatable {
     id: string;
     x: number;
     y: number;
     z: number;
-    rotateX: number;
-    rotateY: number;
-    rotateZ: number;
 }
 
-const Cube3D = () => {
-    const cells: Cell[] = new Array(27).fill(0).map((_, i) => {
-        return {
-            id: i.toString(),
-            x: i % 3,
-            y: Math.floor(i / 3) % 3,
-            z: Math.floor(i / 9),
-            rotateX: 0,
-            rotateY: 0,
-            rotateZ: 0
-        }
-    })
+interface Cube3DProps {
+    cells: Cell3D[];
+    rotate: Rotatable;
+}
 
+const Cube3D = ({rotate, cells}: Cube3DProps) => {
     const elements = [
         {name: 'left', color: '#ffffff'},
         {name: 'right', color: '#ffee80'},
@@ -32,25 +29,50 @@ const Cube3D = () => {
         {name: 'front', color: '#009d19'},
         {name: 'back', color: '#ff9700'},
     ];
+
+
     return (
         <div className="wrapper">
-            <div className="cube">
+            <div className="cube" style={{
+                transform: `                                   
+                                    perspective(500px)                                                                      
+                                    rotateY(${rotate.rotateY}deg)
+                                    rotateX(${rotate.rotateX}deg)                                      
+                                    rotateZ(${rotate.rotateZ}deg)
+                                 
+                                `
+            }}>
                 {cells.map(cell => {
                     return <div key={cell.id}
                                 style={{
-                                    transform: `translate3d(
-                                    calc(var(--cell-size) * ${cell.x}),
-                                    calc(var(--cell-size) * ${cell.y}),
-                                    calc(var(--cell-size) * ${cell.z})                                
-                                )`
+                                    transform: `                                   
+                                    rotateX(${cell.rotateX}deg) 
+                                    rotateY(${cell.rotateY}deg) 
+                                    rotateZ(${cell.rotateZ}deg)
+                                                                                                          
+                                `
                                 }}
-                                className="cell">
-                        {elements.map(e => {
-                            return <div
-                                className={`side ${e.name}`}
-                                key={e.name}
-                                style={{backgroundColor: e.color}}/>;
-                        })}
+                                className="cell-wrapper">
+                        <div
+                            style={{
+                                transform: `                                   
+                                    translate3d(                                    
+                                    calc(var(--cell-size) * ${cell.x  -1}),
+                                    calc(var(--cell-size) * ${cell.y -1}),
+                                    calc(var(--cell-size) * ${cell.z -1 })
+                                    )                              
+                                `
+                            }}
+                            className="cell">
+                            {elements.map(e => {
+                                return <div
+                                    className={`side ${e.name}`}
+                                    key={e.name}
+                                    style={{backgroundColor: e.color}}>
+                                    {cell.x}:{cell.y}:{cell.z}#{cell.id}
+                                </div>;
+                            })}
+                        </div>
                     </div>
                 })}
             </div>

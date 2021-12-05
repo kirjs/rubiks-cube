@@ -4,7 +4,7 @@
 
 .wrapper {
     display: flex;
-    height: 100vh;
+    height: calc(100vh - 30px);
     justify-content: center;
     align-items: center;
 
@@ -13,8 +13,24 @@
 
 .cube {
     transform-style: preserve-3d;
-    transform: perspective(500px) rotateX(-30deg) rotateY(-30deg) translateY(calc(-1.5 * var(--cell-size)));
     display: grid;
+}
+
+
+
+
+.cell-wrapper {
+    transform-style: preserve-3d;
+    transition: 1s all;
+    border: 1px red solid;
+    grid-area: 1/1/1/1;
+    opacity: 0.95;
+}
+
+.cell {
+    display: grid;
+    transform-style: preserve-3d;
+    transition: 1s all;
 }
 
 .side {
@@ -22,19 +38,13 @@
     width: var(--cell-size);
     height: var(--cell-size);
     border: 1px #444 solid;
-}
-
-.cell {
-    display: grid;
-    transform-style: preserve-3d;
+    font-size: 8px;
+    text-align: center;
+    line-height: var(--cell-size);
     grid-area: 1/1/1/1;
-
+    opacity: 0.95;
 }
 
-.cell * {
-    grid-area: 1/1/1/1;
-    opacity: 0.9;
-}
 
 .left {
     transform: rotateY(90deg) translate3d(var(--half-cell), 0px, calc(-1 * var(--half-cell)));
