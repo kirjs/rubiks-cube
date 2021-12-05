@@ -12,6 +12,67 @@
     display: flex;
 }
 
+
+
+
+.animate-top {
+    animation-duration: 0.5s;
+    animation-name: shiftTop;
+}
+
+@keyframes shiftTop {
+    from {
+        transform: translateY(20px);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+.animate-bottom {
+    animation-duration: 0.5s;
+    animation-name: shiftBottom;
+}
+
+@keyframes shiftBottom {
+    from {
+        transform: translateY(-20px);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+.animate-right {
+    animation-duration: 0.5s;
+    animation-name: shiftRight;
+}
+
+@keyframes shiftRight {
+    from {
+        transform: translateX(-20px);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+.animate-left {
+    animation-duration: 0.5s;
+    animation-name: shiftLeft;
+}
+
+@keyframes shiftLeft {
+    from {
+        transform: translateX(20px);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
 /*
 LAPTEUH = 1,
 YELLOW,

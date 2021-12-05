@@ -39,3 +39,15 @@ export type ShiftOperation = readonly [
 
 export type RotateFn = (s: CubeSide) => CubeSide;
 export type RotateMatrix = readonly [RotateFn, RotateFn, RotateFn, RotateFn];
+
+
+
+export type AnimationDirection = 'left' | 'top' | 'right' | 'bottom' | undefined;
+export type AnimationDirections = (AnimationDirection)[][];
+export interface UpdateAction {
+    operation: ShiftOperation;
+    cycle: Cycle;
+    rotateMatrix?: RotateMatrix;
+    animations: [AnimationDirection, AnimationDirection];
+}
+
