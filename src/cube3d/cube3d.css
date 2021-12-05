@@ -1,0 +1,62 @@
+* {
+    box-sizing: border-box;
+}
+
+.wrapper {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+
+    --half-cell: calc(var(--cell-size) / 2);
+}
+
+.cube {
+    transform-style: preserve-3d;
+    transform: perspective(500px) rotateX(-30deg) rotateY(-30deg) translateY(calc(-1.5 * var(--cell-size)));
+    display: grid;
+}
+
+.side {
+    transform-style: preserve-3d;
+    width: var(--cell-size);
+    height: var(--cell-size);
+    border: 1px #444 solid;
+}
+
+.cell {
+    display: grid;
+    transform-style: preserve-3d;
+    grid-area: 1/1/1/1;
+
+}
+
+.cell * {
+    grid-area: 1/1/1/1;
+    opacity: 0.9;
+}
+
+.left {
+    transform: rotateY(90deg) translate3d(var(--half-cell), 0px, calc(-1 * var(--half-cell)));
+}
+
+.right {
+    transform: rotateY(90deg) translate3d(var(--half-cell), 0px, var(--half-cell));
+}
+
+.bottom {
+    transform: rotateX(90deg) translate3d(0, calc(-1 * var(--half-cell)), calc(-1 * var(--half-cell)));
+}
+
+.top {
+    transform: rotateX(90deg) translate3d(0, calc(-1 * var(--half-cell)),  var(--half-cell));
+}
+
+.front {
+    transform: translate3d(0, 0, 0);
+
+}
+
+.back {
+    transform: translate3d(0, 0, calc(-1 * var(--cell-size)));
+}

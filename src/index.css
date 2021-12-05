@@ -13,6 +13,6 @@ code {
 }
 
 :root {
-  --cell-size: 20px;
+  --cell-size: 40px;
   --sidePadding: 4px;
 }
