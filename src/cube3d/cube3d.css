@@ -13,24 +13,35 @@
 
 .cube {
     transform-style: preserve-3d;
-    display: grid;
+    perspective: 500px;
+    position: relative;
 }
-
-
 
 
 .cell-wrapper {
+    width: var(--cell-size);
+    height: var(--cell-size);
     transform-style: preserve-3d;
     transition: 1s all;
-    border: 1px red solid;
-    grid-area: 1/1/1/1;
-    opacity: 0.95;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
 }
 
 .cell {
-    display: grid;
+    transform-origin: center center calc(-1 * var(--half-cell));
+
     transform-style: preserve-3d;
+
     transition: 1s all;
+    width: var(--cell-size);
+    height: var(--cell-size);
+
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 .side {
@@ -41,8 +52,9 @@
     font-size: 8px;
     text-align: center;
     line-height: var(--cell-size);
-    grid-area: 1/1/1/1;
-    opacity: 0.95;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 
@@ -59,7 +71,7 @@
 }
 
 .top {
-    transform: rotateX(90deg) translate3d(0, calc(-1 * var(--half-cell)),  var(--half-cell));
+    transform: rotateX(90deg) translate3d(0, calc(-1 * var(--half-cell)), var(--half-cell));
 }
 
 .front {

@@ -5,14 +5,17 @@ interface Rotatable {
     rotateX: number;
     rotateY: number;
     rotateZ: number;
-
 }
 
-export interface Cell3D extends Rotatable {
+export interface Cell3D {
     id: string;
     x: number;
     y: number;
     z: number;
+    initialX: number;
+    initialY: number;
+    initialZ: number;
+    rotates: string[]
 }
 
 interface Cube3DProps {
@@ -43,24 +46,17 @@ const Cube3D = ({rotate, cells}: Cube3DProps) => {
                                 `
             }}>
                 {cells.map(cell => {
-                    return <div key={cell.id}
-                                style={{
-                                    transform: `                                   
-                                    rotateX(${cell.rotateX}deg) 
-                                    rotateY(${cell.rotateY}deg) 
-                                    rotateZ(${cell.rotateZ}deg)
-                                                                                                          
-                                `
-                                }}
-                                className="cell-wrapper">
-                        <div
+                    return   <div
                             style={{
-                                transform: `                                   
+                                transform: `  
+                                ${cell.rotates.slice().reverse().join(' ')}
+                                                                 
                                     translate3d(                                    
-                                    calc(var(--cell-size) * ${cell.x  -1}),
-                                    calc(var(--cell-size) * ${cell.y -1}),
-                                    calc(var(--cell-size) * ${cell.z -1 })
-                                    )                              
+                                    calc(var(--cell-size) * ${cell.initialX - 1}),
+                                    calc(var(--cell-size) * ${cell.initialY - 1}),
+                                    calc(var(--cell-size) * ${cell.initialZ - 1})
+                                    )     
+                                                             
                                 `
                             }}
                             className="cell">
@@ -69,11 +65,9 @@ const Cube3D = ({rotate, cells}: Cube3DProps) => {
                                     className={`side ${e.name}`}
                                     key={e.name}
                                     style={{backgroundColor: e.color}}>
-                                    {cell.x}:{cell.y}:{cell.z}#{cell.id}
                                 </div>;
                             })}
                         </div>
-                    </div>
                 })}
             </div>
         </div>
