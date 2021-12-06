@@ -16,3 +16,16 @@ code {
   --cell-size: 40px;
   --sidePadding: 4px;
 }
+.matrix-wrapper {
+  display: grid;
+  grid-template-columns:  repeat(9, max-content);
+  gap: 35px;
+}
+
+.matrix {
+  width: 30px;
+  height: 30px;
+  background: red;
+  transform-style: preserve-3d;
+  perspective: 400px;
+}

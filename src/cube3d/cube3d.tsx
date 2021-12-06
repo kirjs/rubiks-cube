@@ -1,11 +1,13 @@
 import React from 'react';
 import './cube3d.css';
+import {matrixToCss, TransformMatrix} from "../shared";
 
 interface Rotatable {
     rotateX: number;
     rotateY: number;
     rotateZ: number;
 }
+
 
 export interface Cell3D {
     id: string;
@@ -15,7 +17,7 @@ export interface Cell3D {
     initialX: number;
     initialY: number;
     initialZ: number;
-    rotates: string[]
+    rotates: TransformMatrix;
 }
 
 interface Cube3DProps {
@@ -49,8 +51,8 @@ const Cube3D = ({rotate, cells}: Cube3DProps) => {
                     return   <div
                             style={{
                                 transform: `  
-                                ${cell.rotates.slice().reverse().join(' ')}
-                                                                 
+                                ${matrixToCss(cell.rotates)}
+                                                                
                                     translate3d(                                    
                                     calc(var(--cell-size) * ${cell.initialX - 1}),
                                     calc(var(--cell-size) * ${cell.initialY - 1}),

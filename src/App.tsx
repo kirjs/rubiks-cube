@@ -14,6 +14,7 @@ import './App.css';
 // import {CubeData, UpdateAction} from "./types";
 import {operations} from "./operations";
 import Cube3D, {Cell3D} from "./cube3d/cube3d";
+import {combineMatrix, initialMatrix, rotateX, rotateY, rotateZ} from "./shared";
 
 const initialCells: Cell3D[] = new Array(27).fill(0).map((_, i) => {
     return {
@@ -24,7 +25,7 @@ const initialCells: Cell3D[] = new Array(27).fill(0).map((_, i) => {
         initialY: Math.floor(i / 3) % 3,
         z: Math.floor(i / 9),
         initialZ: Math.floor(i / 9),
-        rotates: []
+        rotates: initialMatrix()
     }
 });
 
@@ -48,9 +49,9 @@ function App() {
     //     setLastAction(action);
     // };
 
-    const [rotateX, setRotateX] = useState(-30);
-    const [rotateY, setRotateY] = useState(-30);
-    const [rotateZ, setRotateZ] = useState(0);
+    const [rotateCubeX, setRotateCubeX] = useState(-30);
+    const [rotateCubeY, setRotateCubeY] = useState(-30);
+    const [rotateCubeZ, setRotateCubeZ] = useState(0);
 
     const [cells, dispatch] = useReducer((state: Cell3D[], action: string) => {
         const map: Record<string, Action> = {
@@ -61,7 +62,7 @@ function App() {
                         ...cell,
                         z: 2 - cell.y,
                         y: cell.z,
-                        rotates: cell.rotates.concat('rotateX(-90deg)'),
+                        rotates: combineMatrix(rotateX(-90), cell.rotates),
                     }
                 )
             },
@@ -72,7 +73,7 @@ function App() {
                         ...cell,
                         z: cell.y,
                         y: 2 - cell.z,
-                        rotates: cell.rotates.concat('rotateX(90deg)'),
+                        rotates: combineMatrix(rotateX(90), cell.rotates),
                     }
                 )
             },
@@ -83,7 +84,7 @@ function App() {
                         ...cell,
                         z: 2 - cell.x,
                         x: cell.z,
-                        rotates: cell.rotates.concat('rotateY(90deg)'),
+                        rotates: combineMatrix(rotateY(90), cell.rotates),
                     }
                 )
             },
@@ -94,7 +95,7 @@ function App() {
                         ...cell,
                         z: cell.x,
                         x: 2 - cell.z,
-                        rotates: cell.rotates.concat('rotateY(-90deg)'),
+                        rotates: combineMatrix(rotateY(-90), cell.rotates),
                     }
                 )
             },
@@ -105,7 +106,7 @@ function App() {
                         ...cell,
                         z: cell.x,
                         x: 2 - cell.z,
-                        rotates: cell.rotates.concat('rotateY(-90deg)'),
+                        rotates: combineMatrix(rotateY(-90), cell.rotates),
                     }
                 )
             },
@@ -116,7 +117,7 @@ function App() {
                         ...cell,
                         z: 2 - cell.x,
                         x: cell.z,
-                        rotates: cell.rotates.concat('rotateY(90deg)'),
+                      rotates: combineMatrix(rotateY(90), cell.rotates),
                     }
                 )
             },
@@ -127,7 +128,7 @@ function App() {
                         ...cell,
                         z: 2 - cell.y,
                         y: cell.z,
-                        rotates: cell.rotates.concat('rotateX(-90deg)'),
+                        rotates: combineMatrix(rotateX(-90), cell.rotates),
                     }
                 )
             },
@@ -138,7 +139,7 @@ function App() {
                         ...cell,
                         z: cell.y,
                         y: 2 - cell.z,
-                        rotates: cell.rotates.concat('rotateX(90deg)'),
+                        rotates: combineMatrix(rotateX(90), cell.rotates),
                     }
                 )
             },
@@ -151,7 +152,7 @@ function App() {
                         ...cell,
                         x: cell.y,
                         y: 2 - cell.x,
-                        rotates: cell.rotates.concat('rotateZ(-90deg)'),
+                        rotates: combineMatrix(rotateZ(-90), cell.rotates),
                     }
                 )
             },
@@ -162,7 +163,7 @@ function App() {
                         ...cell,
                         x: 2 - cell.y,
                         y: cell.x,
-                        rotates: cell.rotates.concat('rotateZ(90deg)'),
+                        rotates: combineMatrix(rotateZ(90), cell.rotates),
                     }
                 )
             },
@@ -174,7 +175,7 @@ function App() {
                         ...cell,
                         x: cell.y,
                         y: 2 - cell.x,
-                        rotates: cell.rotates.concat('rotateZ(-90deg)'),
+                        rotates: combineMatrix(rotateZ(-90), cell.rotates),
                     }
                 )
             },
@@ -185,7 +186,7 @@ function App() {
                         ...cell,
                         x: 2 - cell.y,
                         y: cell.x,
-                        rotates: cell.rotates.concat('rotateZ(90deg)'),
+                        rotates: combineMatrix(rotateZ(90), cell.rotates),
                     }
                 )
             },
@@ -204,17 +205,18 @@ function App() {
 
         return state;
     }, initialCells);
-
+console.log(cells);
     return (
 
         <div className="App">
+            {/*<Matrix></Matrix>*/}
             <Cube3D cells={cells}
-                    rotate={{rotateX, rotateY, rotateZ}}></Cube3D>
+                    rotate={{rotateX: rotateCubeX, rotateY: rotateCubeY, rotateZ: rotateCubeZ}}></Cube3D>
             {/*<Cube cube={cube} lastAction={lastAction}/>*/}
             <div>
-                <input type="range" value={rotateX} onChange={(e) => setRotateX(+e.target.value)} min={-180} max={180}/>
-                <input type="range" value={rotateY} onChange={(e) => setRotateY(+e.target.value)} min={-180} max={180}/>
-                <input type="range" value={rotateZ} onChange={(e) => setRotateZ(+e.target.value)} min={-180} max={180}/>
+                <input type="range" value={rotateCubeX} onChange={(e) => setRotateCubeX(+e.target.value)} min={-180} max={180}/>
+                <input type="range" value={rotateCubeY} onChange={(e) => setRotateCubeY(+e.target.value)} min={-180} max={180}/>
+                <input type="range" value={rotateCubeZ} onChange={(e) => setRotateCubeZ(+e.target.value)} min={-180} max={180}/>
             </div>
             {Object.entries(operations).map(([name, action], i) => {
                 return <button onClick={() => {
@@ -229,6 +231,8 @@ function App() {
                 dispatch(o[i]);
             }}>random
             </button>
+
+
         </div>
     );
 }
