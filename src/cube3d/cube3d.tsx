@@ -51,14 +51,12 @@ const Cube3D = ({rotate, cells}: Cube3DProps) => {
                     return   <div
                             style={{
                                 transform: `  
-                                ${matrixToCss(cell.rotates)}
-                                                                
+                                ${matrixToCss(cell.rotates)}                           
                                     translate3d(                                    
                                     calc(var(--cell-size) * ${cell.initialX - 1}),
                                     calc(var(--cell-size) * ${cell.initialY - 1}),
                                     calc(var(--cell-size) * ${cell.initialZ - 1})
-                                    )     
-                                                             
+                                    )                                                                  
                                 `
                             }}
                             className="cell">

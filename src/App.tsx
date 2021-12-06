@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from 'react';
+import React, {useEffect, useReducer, useState} from 'react';
 
 
 import './App.css';
@@ -34,6 +34,145 @@ interface Action {
     converter: (cell: Cell3D) => Cell3D;
 }
 
+
+const map: Record<string, Action> = {
+    RS: {
+        predicate: (cell) => cell.x === 2,
+        converter: (cell) => (
+            {
+                ...cell,
+                z: 2 - cell.y,
+                y: cell.z,
+                rotates: combineMatrix(rotateX(90), cell.rotates),
+            }
+        )
+    },
+    R: {
+        predicate: (cell) => cell.x === 2,
+        converter: (cell) => (
+            {
+                ...cell,
+                z: cell.y,
+                y: 2 - cell.z,
+                rotates: combineMatrix(rotateX(-90), cell.rotates),
+            }
+        )
+    },
+    US: {
+        predicate: (cell) => cell.y === 0,
+        converter: (cell) => (
+            {
+                ...cell,
+                z: 2 - cell.x,
+                x: cell.z,
+                rotates: combineMatrix(rotateY(-90), cell.rotates),
+            }
+        )
+    },
+    U: {
+        predicate: (cell) => cell.y === 0,
+        converter: (cell) => (
+            {
+                ...cell,
+                z: cell.x,
+                x: 2 - cell.z,
+                rotates: combineMatrix(rotateY(90), cell.rotates),
+            }
+        )
+    },
+    D: {
+        predicate: (cell) => cell.y === 2,
+        converter: (cell) => (
+            {
+                ...cell,
+                z: cell.x,
+                x: 2 - cell.z,
+                rotates: combineMatrix(rotateY(90), cell.rotates),
+            }
+        )
+    },
+    DS: {
+        predicate: (cell) => cell.y === 2,
+        converter: (cell) => (
+            {
+                ...cell,
+                z: 2 - cell.x,
+                x: cell.z,
+                rotates: combineMatrix(rotateY(-90), cell.rotates),
+            }
+        )
+    },
+    LS: {
+        predicate: (cell) => cell.x === 0,
+        converter: (cell) => (
+            {
+                ...cell,
+                z: 2 - cell.y,
+                y: cell.z,
+                rotates: combineMatrix(rotateX(90), cell.rotates),
+            }
+        )
+    },
+    L: {
+        predicate: (cell) => cell.x === 0,
+        converter: (cell) => (
+            {
+                ...cell,
+                z: cell.y,
+                y: 2 - cell.z,
+                rotates: combineMatrix(rotateX(-90), cell.rotates),
+            }
+        )
+    },
+
+
+    BS: {
+        predicate: (cell) => cell.z === 0,
+        converter: (cell) => (
+            {
+                ...cell,
+                x: cell.y,
+                y: 2 - cell.x,
+                rotates: combineMatrix(rotateZ(90), cell.rotates),
+            }
+        )
+    },
+    B: {
+        predicate: (cell) => cell.z === 0,
+        converter: (cell) => (
+            {
+                ...cell,
+                x: 2 - cell.y,
+                y: cell.x,
+                rotates: combineMatrix(rotateZ(-90), cell.rotates),
+            }
+        )
+    },
+
+    FS: {
+        predicate: (cell) => cell.z === 2,
+        converter: (cell) => (
+            {
+                ...cell,
+                x: cell.y,
+                y: 2 - cell.x,
+                rotates: combineMatrix(rotateZ(90), cell.rotates),
+            }
+        )
+    },
+    F: {
+        predicate: (cell) => cell.z === 2,
+        converter: (cell) => (
+            {
+                ...cell,
+                x: 2 - cell.y,
+                y: cell.x,
+                rotates: combineMatrix(rotateZ(-90), cell.rotates),
+            }
+        )
+    },
+}
+
 function App() {
     // const [lastAction, setLastAction] = useState<UpdateAction>();
     //
@@ -49,148 +188,24 @@ function App() {
     //     setLastAction(action);
     // };
 
+    useEffect(() => {
+        const listener = (e: KeyboardEvent) => {
+            const key = e.code.replace('Key', '') + (e.shiftKey ? 'S' : '');
+            if (map[key]) {
+                dispatch(key);
+            }
+        };
+        document.body.addEventListener('keydown', listener);
+        return () => {
+            document.body.removeEventListener('keydown', listener);
+        }
+    }, []);
+
     const [rotateCubeX, setRotateCubeX] = useState(-30);
     const [rotateCubeY, setRotateCubeY] = useState(-30);
     const [rotateCubeZ, setRotateCubeZ] = useState(0);
 
     const [cells, dispatch] = useReducer((state: Cell3D[], action: string) => {
-        const map: Record<string, Action> = {
-            RS: {
-                predicate: (cell) => cell.x === 2,
-                converter: (cell) => (
-                    {
-                        ...cell,
-                        z: 2 - cell.y,
-                        y: cell.z,
-                        rotates: combineMatrix(rotateX(-90), cell.rotates),
-                    }
-                )
-            },
-            R: {
-                predicate: (cell) => cell.x === 2,
-                converter: (cell) => (
-                    {
-                        ...cell,
-                        z: cell.y,
-                        y: 2 - cell.z,
-                        rotates: combineMatrix(rotateX(90), cell.rotates),
-                    }
-                )
-            },
-            US: {
-                predicate: (cell) => cell.y === 0,
-                converter: (cell) => (
-                    {
-                        ...cell,
-                        z: 2 - cell.x,
-                        x: cell.z,
-                        rotates: combineMatrix(rotateY(90), cell.rotates),
-                    }
-                )
-            },
-            U: {
-                predicate: (cell) => cell.y === 0,
-                converter: (cell) => (
-                    {
-                        ...cell,
-                        z: cell.x,
-                        x: 2 - cell.z,
-                        rotates: combineMatrix(rotateY(-90), cell.rotates),
-                    }
-                )
-            },
-            D: {
-                predicate: (cell) => cell.y === 2,
-                converter: (cell) => (
-                    {
-                        ...cell,
-                        z: cell.x,
-                        x: 2 - cell.z,
-                        rotates: combineMatrix(rotateY(-90), cell.rotates),
-                    }
-                )
-            },
-            DS: {
-                predicate: (cell) => cell.y === 2,
-                converter: (cell) => (
-                    {
-                        ...cell,
-                        z: 2 - cell.x,
-                        x: cell.z,
-                      rotates: combineMatrix(rotateY(90), cell.rotates),
-                    }
-                )
-            },
-            LS: {
-                predicate: (cell) => cell.x === 0,
-                converter: (cell) => (
-                    {
-                        ...cell,
-                        z: 2 - cell.y,
-                        y: cell.z,
-                        rotates: combineMatrix(rotateX(-90), cell.rotates),
-                    }
-                )
-            },
-            L: {
-                predicate: (cell) => cell.x === 0,
-                converter: (cell) => (
-                    {
-                        ...cell,
-                        z: cell.y,
-                        y: 2 - cell.z,
-                        rotates: combineMatrix(rotateX(90), cell.rotates),
-                    }
-                )
-            },
-
-
-            BS: {
-                predicate: (cell) => cell.z === 0,
-                converter: (cell) => (
-                    {
-                        ...cell,
-                        x: cell.y,
-                        y: 2 - cell.x,
-                        rotates: combineMatrix(rotateZ(-90), cell.rotates),
-                    }
-                )
-            },
-            B: {
-                predicate: (cell) => cell.z === 0,
-                converter: (cell) => (
-                    {
-                        ...cell,
-                        x: 2 - cell.y,
-                        y: cell.x,
-                        rotates: combineMatrix(rotateZ(90), cell.rotates),
-                    }
-                )
-            },
-
-            FS: {
-                predicate: (cell) => cell.z === 2,
-                converter: (cell) => (
-                    {
-                        ...cell,
-                        x: cell.y,
-                        y: 2 - cell.x,
-                        rotates: combineMatrix(rotateZ(-90), cell.rotates),
-                    }
-                )
-            },
-            F: {
-                predicate: (cell) => cell.z === 2,
-                converter: (cell) => (
-                    {
-                        ...cell,
-                        x: 2 - cell.y,
-                        y: cell.x,
-                        rotates: combineMatrix(rotateZ(90), cell.rotates),
-                    }
-                )
-            },
-        }
 
 
         let handler = map[action];
@@ -205,7 +220,7 @@ function App() {
 
         return state;
     }, initialCells);
-console.log(cells);
+    console.log(cells);
     return (
 
         <div className="App">
@@ -214,9 +229,12 @@ console.log(cells);
                     rotate={{rotateX: rotateCubeX, rotateY: rotateCubeY, rotateZ: rotateCubeZ}}></Cube3D>
             {/*<Cube cube={cube} lastAction={lastAction}/>*/}
             <div>
-                <input type="range" value={rotateCubeX} onChange={(e) => setRotateCubeX(+e.target.value)} min={-180} max={180}/>
-                <input type="range" value={rotateCubeY} onChange={(e) => setRotateCubeY(+e.target.value)} min={-180} max={180}/>
-                <input type="range" value={rotateCubeZ} onChange={(e) => setRotateCubeZ(+e.target.value)} min={-180} max={180}/>
+                <input type="range" value={rotateCubeX} onChange={(e) => setRotateCubeX(+e.target.value)} min={-180}
+                       max={180}/>
+                <input type="range" value={rotateCubeY} onChange={(e) => setRotateCubeY(+e.target.value)} min={-180}
+                       max={180}/>
+                <input type="range" value={rotateCubeZ} onChange={(e) => setRotateCubeZ(+e.target.value)} min={-180}
+                       max={180}/>
             </div>
             {Object.entries(operations).map(([name, action], i) => {
                 return <button onClick={() => {
