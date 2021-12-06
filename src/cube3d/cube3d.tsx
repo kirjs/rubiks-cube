@@ -27,12 +27,12 @@ interface Cube3DProps {
 
 const Cube3D = ({rotate, cells}: Cube3DProps) => {
     const elements = [
-        {name: 'left', color: '#ffffff'},
-        {name: 'right', color: '#ffee80'},
-        {name: 'bottom', color: '#0751ef'},
-        {name: 'top', color: '#ff0000'},
+        {name: 'left', color: '#ff9700'},
+        {name: 'right', color: '#ff0000'},
+        {name: 'down', color: '#ffee80'},
+        {name: 'up', color: '#ffffff'},
         {name: 'front', color: '#009d19'},
-        {name: 'back', color: '#ff9700'},
+        {name: 'back', color: '#0751ef'},
     ];
 
 
@@ -40,9 +40,9 @@ const Cube3D = ({rotate, cells}: Cube3DProps) => {
         <div className="wrapper">
             <div className="cube" style={{
                 transform: `                                   
-                                    perspective(500px)                                                                      
-                                    rotateY(${rotate.rotateY}deg)
-                                    rotateX(${rotate.rotateX}deg)                                      
+                                    perspective(500px)
+                                    rotateX(${rotate.rotateX}deg)                                                                      
+                                    rotateY(${rotate.rotateY}deg)                                                                          
                                     rotateZ(${rotate.rotateZ}deg)
                                  
                                 `

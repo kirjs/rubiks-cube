@@ -12,36 +12,23 @@
 }
 
 .cube {
+    width: calc(var(--cell-size) * 3);
+    height: calc(var(--cell-size) * 3);
     transform-style: preserve-3d;
-    perspective: 500px;
     position: relative;
 }
 
 
-.cell-wrapper {
-    width: var(--cell-size);
-    height: var(--cell-size);
-    transform-style: preserve-3d;
-    transition: 1s all;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-}
-
 .cell {
     transform-origin: center center calc(-1 * var(--half-cell));
-
     transform-style: preserve-3d;
-
     transition: 1s all;
     width: var(--cell-size);
     height: var(--cell-size);
 
     position: absolute;
-    left: 0;
-    top: 0;
+    /*left: calc( var(--cell-size));*/
+    /*top: calc( var(--cell-size));*/
 }
 
 .side {
@@ -66,11 +53,11 @@
     transform: rotateY(90deg) translate3d(var(--half-cell), 0px, var(--half-cell));
 }
 
-.bottom {
+.down {
     transform: rotateX(90deg) translate3d(0, calc(-1 * var(--half-cell)), calc(-1 * var(--half-cell)));
 }
 
-.top {
+.up {
     transform: rotateX(90deg) translate3d(0, calc(-1 * var(--half-cell)), var(--half-cell));
 }
 
