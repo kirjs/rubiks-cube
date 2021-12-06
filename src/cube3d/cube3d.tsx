@@ -61,10 +61,22 @@ const Cube3D = ({rotate, cells}: Cube3DProps) => {
                             }}
                             className="cell">
                             {elements.map(e => {
+                                let color = e.color;
+                                if(
+                                    (e.name === 'front' && cell.initialZ !== 2) ||
+                                    (e.name === 'back' && cell.initialZ !== 0) ||
+                                    (e.name === 'up' && cell.initialY !== 0) ||
+                                    (e.name === 'down' && cell.initialY !== 2) ||
+                                    (e.name === 'right' && cell.initialX !== 2) ||
+                                    (e.name === 'left' && cell.initialX !== 0)
+
+                                ){
+                                    color = '#444';
+                                }
                                 return <div
                                     className={`side ${e.name}`}
                                     key={e.name}
-                                    style={{backgroundColor: e.color}}>
+                                    style={{backgroundColor: color}}>
                                 </div>;
                             })}
                         </div>
