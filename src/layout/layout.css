@@ -1,0 +1,23 @@
+.layout {
+    display: grid;
+    grid-template-columns: repeat(4, max-content);
+    grid-auto-rows: auto;
+    grid-template-areas:
+       ". s3 . ."
+       "s0 s4 s1 s5"
+        ". s2 . .";
+    margin-bottom: 16px;
+    gap: 4px;
+}
+
+.layout-side {
+    display: grid;
+    grid-template-columns: repeat(3, var(--cell-size));
+
+}
+
+.layout-cell {
+    border: 1px red solid;
+    width: var(--cell-size);
+    height: var(--cell-size);
+}

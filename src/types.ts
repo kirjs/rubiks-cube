@@ -7,6 +7,9 @@ export enum Color {
     ORANGE
 }
 
+
+export type SideName = 'left' | 'right' | 'down' | 'up' | 'front' | 'back';
+
 export interface Cell {
     color: Color,
     id: string;
@@ -41,9 +44,9 @@ export type RotateFn = (s: CubeSide) => CubeSide;
 export type RotateMatrix = readonly [RotateFn, RotateFn, RotateFn, RotateFn];
 
 
-
 export type AnimationDirection = 'left' | 'top' | 'right' | 'bottom' | undefined;
 export type AnimationDirections = (AnimationDirection)[][];
+
 export interface UpdateAction {
     operation: ShiftOperation;
     cycle: Cycle;

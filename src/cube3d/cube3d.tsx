@@ -1,6 +1,7 @@
 import React from 'react';
 import './cube3d.css';
 import {matrixToCss, TransformMatrix} from "../shared";
+import {SideName} from "../types";
 
 interface Rotatable {
     rotateX: number;
@@ -23,6 +24,7 @@ export interface Cell3D {
     initialY: number;
     initialZ: number;
     rotates: TransformMatrix;
+    map: Record<SideName, number>,
     sides: Side[];
 }
 
@@ -48,8 +50,9 @@ const Cube3D = ({rotate, cells}: Cube3DProps) => {
             }}>
                 {cells.map(cell => {
                     return   <div
-                            style={{
-                                transform: `  
+                        key={cell.id}
+                        style={{
+                            transform: `  
                                 ${matrixToCss(cell.rotates)}                           
                                     translate3d(                                    
                                     calc(var(--cell-size) * ${cell.initialX - 1}),
@@ -57,8 +60,8 @@ const Cube3D = ({rotate, cells}: Cube3DProps) => {
                                     calc(var(--cell-size) * ${cell.initialZ - 1})
                                     )                                                                  
                                 `
-                            }}
-                            className="cell">
+                        }}
+                        className="cell">
                         {cell.sides.map(e => {
                             let color = e.color;
                             if (
@@ -76,6 +79,9 @@ const Cube3D = ({rotate, cells}: Cube3DProps) => {
                                     className={`side ${e.name}`}
                                     key={e.name}
                                     style={{backgroundColor: color}}>
+                                    {cell.x},
+                                    {cell.y},
+                                    {cell.z}
                                 </div>;
                             })}
                         </div>

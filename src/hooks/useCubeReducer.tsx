@@ -3,6 +3,7 @@ import {Cell3D} from "../cube3d/cube3d";
 import {map} from "../common/actions";
 import {initialMatrix} from "../shared";
 
+
 const elements = [
     {name: 'left', color: '#ff9700'},
     {name: 'right', color: '#ff0000'},
@@ -35,6 +36,14 @@ const initialCells: Cell3D[] = new Array(27).fill(0).map((_, i) => {
         z,
         initialZ: z,
         rotates: initialMatrix(),
+        map: {
+            'left': 0,
+            'right': 1,
+            'down': 2,
+            'up': 3,
+            'front': 4,
+            'back': 5,
+        },
         sides: elements.map(e => {
                 return {
                     ...e,
