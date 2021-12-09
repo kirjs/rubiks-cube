@@ -9,6 +9,11 @@ interface Rotatable {
 }
 
 
+export interface Side {
+    name: string;
+    color: string;
+}
+
 export interface Cell3D {
     id: string;
     x: number;
@@ -18,6 +23,7 @@ export interface Cell3D {
     initialY: number;
     initialZ: number;
     rotates: TransformMatrix;
+    sides: Side[];
 }
 
 interface Cube3DProps {
@@ -26,14 +32,7 @@ interface Cube3DProps {
 }
 
 const Cube3D = ({rotate, cells}: Cube3DProps) => {
-    const elements = [
-        {name: 'left', color: '#ff9700'},
-        {name: 'right', color: '#ff0000'},
-        {name: 'down', color: '#ffee80'},
-        {name: 'up', color: '#ffffff'},
-        {name: 'front', color: '#009d19'},
-        {name: 'back', color: '#0751ef'},
-    ];
+
 
 
     return (
@@ -60,17 +59,17 @@ const Cube3D = ({rotate, cells}: Cube3DProps) => {
                                 `
                             }}
                             className="cell">
-                            {elements.map(e => {
-                                let color = e.color;
-                                if(
-                                    (e.name === 'front' && cell.initialZ !== 2) ||
-                                    (e.name === 'back' && cell.initialZ !== 0) ||
-                                    (e.name === 'up' && cell.initialY !== 0) ||
-                                    (e.name === 'down' && cell.initialY !== 2) ||
-                                    (e.name === 'right' && cell.initialX !== 2) ||
-                                    (e.name === 'left' && cell.initialX !== 0)
+                        {cell.sides.map(e => {
+                            let color = e.color;
+                            if (
+                                (e.name === 'front' && cell.initialZ !== 2) ||
+                                (e.name === 'back' && cell.initialZ !== 0) ||
+                                (e.name === 'up' && cell.initialY !== 0) ||
+                                (e.name === 'down' && cell.initialY !== 2) ||
+                                (e.name === 'right' && cell.initialX !== 2) ||
+                                (e.name === 'left' && cell.initialX !== 0)
 
-                                ){
+                            ) {
                                     color = '#444';
                                 }
                                 return <div
