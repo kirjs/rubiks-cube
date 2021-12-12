@@ -1,54 +1,54 @@
 import React from 'react';
 import './layout.css';
-import {Cell3D} from "../cube3d/cube3d";
-import {SideName} from "../types";
+import {Cell3D} from '../cube3d/cube3d';
+import {SideName} from '../types';
 
 interface LayoutProps {
-    cells: Cell3D[];
+  cells: Cell3D[];
 }
 
-const filters = [
-    (cell: Cell3D) => cell.x === 0,
-    (cell: Cell3D) => cell.x === 2,
-    (cell: Cell3D) => cell.y === 2,
-    (cell: Cell3D) => cell.y === 0,
-    (cell: Cell3D) => cell.z === 2,
-    (cell: Cell3D) => cell.z === 0,
-];
+const filters = {
+  left: (cell: Cell3D) => cell.x === 0,
+  right: (cell: Cell3D) => cell.x === 2,
+  down: (cell: Cell3D) => cell.y === 2,
+  up: (cell: Cell3D) => cell.y === 0,
+  front: (cell: Cell3D) => cell.z === 2,
+  back: (cell: Cell3D) => cell.z === 0,
+};
 
-const indexToSideName: SideName[] = [
-    'left',
-    'right',
-    'down',
-    'up',
-    'front',
-    'back',
-]
+const sortPower = {
+  left: (a: Cell3D) => a.y * 3 + a.z,
+  right: (a: Cell3D) => a.y * 3 + (2 - a.z),
+  down: (a: Cell3D) => (2 - a.z) * 3 + a.x,
+  up: (a: Cell3D) => a.z * 3 + a.x,
+  front: (a: Cell3D) => a.y * 3 + a.x,
+  back: (a: Cell3D) => a.y * 3 + (2 - a.x),
+};
+
+const sideNames: SideName[] = ['left', 'right', 'down', 'up', 'front', 'back'];
 
 const Layout = ({cells}: LayoutProps) => {
-
-    return (
-        <div className="layout">
-            {Array.from(Array(6), (a, b) => b).map((key) => {
-                const sideCells = cells.filter(filters[key]);
-                return <div key={key} style={{gridArea: 's' + key}}>
-                    <div>{key}</div>
-                    <div className="layout-side">
-                        {sideCells.sort((a, b) => {
-                            return a.z * 9 + a.y * 3 + a.x - (b.z * 9 + b.y * 3 + b.x);
-                        }).map((cell, v) => {
-                            return <div key={v}
-                                        style={{backgroundColor: cell.sides[cell.map[indexToSideName[key]]].color}}
-                                        className="layout-cell">
-                                {cell.initialX}/{cell.initialY}/{cell.initialZ}
-                            </div>
-
-                        })}
-                    </div>
-                </div>
-            })}
-        </div>
-    );
+  return (
+    <div className="layout">
+      {sideNames.map((side) => {
+        const sideCells = cells.filter(filters[side]).sort((a, b) => sortPower[side](a) - sortPower[side](b));
+        return (
+          <div key={side} style={{gridArea: side}}>
+            <div>{side}</div>
+            <div className="layout-side">
+              {sideCells.map((cell, v) => {
+                return (
+                  <div key={v} style={{backgroundColor: cell.sides[cell.map[side]].color}} className="layout-cell">
+                    {/* {cell.x}/{cell.y}/{cell.z} */}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
 };
 
 export default Layout;

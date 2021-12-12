@@ -79,9 +79,9 @@ const Cube3D = ({rotate, cells}: Cube3DProps) => {
                                     className={`side ${e.name}`}
                                     key={e.name}
                                     style={{backgroundColor: color}}>
-                                    {cell.x},
+                                    {/* {cell.x},
                                     {cell.y},
-                                    {cell.z}
+                                    {cell.z} */}
                                 </div>;
                             })}
                         </div>

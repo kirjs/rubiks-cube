@@ -3,9 +3,9 @@
     grid-template-columns: repeat(4, max-content);
     grid-auto-rows: auto;
     grid-template-areas:
-       ". s3 . ."
-       "s0 s4 s1 s5"
-        ". s2 . .";
+        '. up . .'
+        'left front right back'
+        '. down . .';
     margin-bottom: 16px;
     gap: 4px;
 }
@@ -13,11 +13,12 @@
 .layout-side {
     display: grid;
     grid-template-columns: repeat(3, var(--cell-size));
-
 }
 
 .layout-cell {
-    border: 1px red solid;
+    border: 1px solid black;
+    border-radius: 4px;
     width: var(--cell-size);
     height: var(--cell-size);
+    transition: 0.1s all;
 }
