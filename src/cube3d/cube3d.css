@@ -4,11 +4,12 @@
 
 .wrapper {
     display: flex;
-    height: calc(100vh - 30px);
     justify-content: center;
     align-items: center;
 
     --half-cell: calc(var(--cell-size) / 2);
+    width: 300px;
+    height: 300px;
 }
 
 .cube {
@@ -16,19 +17,19 @@
     height: calc(var(--cell-size) * 3);
     transform-style: preserve-3d;
     position: relative;
+    transform-origin: calc(3 * var(--half-cell)) calc(3 * var(--half-cell)) calc(-1 * var(--half-cell));
 }
 
-
 .cell {
-    transform-origin: center center calc(-1 * var(--half-cell));
+    transform-origin: var(--half-cell) var(--half-cell) calc(-1 * var(--half-cell));
     transform-style: preserve-3d;
-    transition: 1s all;
+    transition: .4s all;
     width: var(--cell-size);
     height: var(--cell-size);
 
     position: absolute;
-    /*left: calc( var(--cell-size));*/
-    /*top: calc( var(--cell-size));*/
+    left: var(--cell-size);
+    top: var(--cell-size);
 }
 
 .side {
